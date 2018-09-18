@@ -74,6 +74,7 @@ import org.spongepowered.despector.ast.stmt.branch.While;
 import org.spongepowered.despector.ast.stmt.invoke.InstanceMethodInvoke;
 import org.spongepowered.despector.ast.stmt.invoke.InvokeStatement;
 import org.spongepowered.despector.ast.stmt.invoke.Lambda;
+import org.spongepowered.despector.ast.stmt.invoke.MethodReference;
 import org.spongepowered.despector.ast.stmt.invoke.New;
 import org.spongepowered.despector.ast.stmt.invoke.StaticMethodInvoke;
 import org.spongepowered.despector.ast.stmt.misc.Comment;
@@ -684,6 +685,13 @@ public class MergeUtil {
             }
             return true;
         });
+        create(MethodReference.class, (set, a, b) -> {
+            if (!merge(set, a.getType(), b.getType())) {
+                return false;
+            }
+            // TODO: finish method reference
+            return true;
+        });
         create(InstanceMethodInvoke.class, (set, a, b) -> {
             TypeEntry ao = set.getOldSourceSet().get(a.getOwnerName());
             TypeEntry bo = set.getNewSourceSet().get(b.getOwnerName());
@@ -934,6 +942,8 @@ public class MergeUtil {
                 if (b.getInitializer() != null) {
                     return false;
                 }
+            } else if (b.getInitializer() == null) {
+                return false;
             } else {
                 if (a.getInitializer().length != b.getInitializer().length) {
                     return false;
