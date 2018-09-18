@@ -22,7 +22,10 @@ repositories {
     mavenLocal()
     mavenCentral()
     maven {
-        url "https://repo.voxelgenesis.com/artifactory/decompiler/"
+        url "http://repo.voxelgenesis.com/artifactory/decompiler/"
+    }
+    flatDir {
+    	dirs 'libs'
     }
 }
 
