@@ -78,6 +78,7 @@ public class ObfuscationMapper {
     private static String validation_mappings = null;
     private static String seed_mappings = null;
     private static String prev_mappings = null;
+    private static String out_mappings_type = "srg";
 
     static {
         flags.put("--config=", (arg) -> {
@@ -102,6 +103,9 @@ public class ObfuscationMapper {
         });
         flags.put("--output_unmatched", (arg) -> {
             output_unmatched = true;
+        });
+        flags.put("--out_mappings_type=", (arg) -> {
+            out_mappings_type = arg.substring(20);
         });
     }
 
@@ -371,7 +375,19 @@ public class ObfuscationMapper {
         new_sourceset.accept(unknown);
 
         Path mappings_out = root.resolve(output_mappings);
-        MappingsIO.write(mappings_out.toAbsolutePath(), new_mappings, unknown.getNext());
+        
+        switch (out_mappings_type) {
+        case "csrg":
+            MappingsIO.writeCsrg(mappings_out.toAbsolutePath(), new_mappings, unknown.getNext(), false);
+            break;
+        case "tsrg":
+            MappingsIO.writeCsrg(mappings_out.toAbsolutePath(), new_mappings, unknown.getNext(), true);
+            break;
+        case "srg":
+        default:
+            MappingsIO.write(mappings_out.toAbsolutePath(), new_mappings, unknown.getNext());
+            break;
+        }
 
     }
 
