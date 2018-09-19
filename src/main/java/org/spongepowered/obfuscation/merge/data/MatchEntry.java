@@ -34,6 +34,10 @@ import java.util.Map;
 
 public class MatchEntry {
 
+    public static final int HINT_VOTE = 1;
+    public static final int NORMAL_VOTE = 5;
+    public static final int BIG_VOTE = 20;
+    
     private final TypeEntry old_type;
     private TypeEntry new_type;
     private boolean merged = false;
@@ -73,6 +77,10 @@ public class MatchEntry {
     }
 
     public boolean vote(TypeEntry n) {
+        return vote(n, NORMAL_VOTE);
+    }
+    
+    public boolean vote(TypeEntry n, int count) {
         if (this.new_type != null) {
             return this.new_type == n;
         }
@@ -84,7 +92,7 @@ public class MatchEntry {
         }
         Integer v = this.votes.get(n);
         if (v != null) {
-            int vote = v + 1;
+            int vote = v + count;
             this.votes.put(n, vote);
             if (vote > this.highest) {
                 if (n == this.highest_type) {
@@ -98,9 +106,9 @@ public class MatchEntry {
                 this.second = vote;
             }
         } else {
-            this.votes.put(n, 1);
+            this.votes.put(n, count);
             if (this.highest == 0) {
-                this.highest = 1;
+                this.highest = count;
                 this.highest_type = n;
             }
         }

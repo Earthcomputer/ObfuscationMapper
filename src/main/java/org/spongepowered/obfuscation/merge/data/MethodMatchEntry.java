@@ -70,6 +70,10 @@ public class MethodMatchEntry {
     }
 
     public boolean vote(MethodEntry n) {
+        return vote(n, MatchEntry.NORMAL_VOTE);
+    }
+    
+    public boolean vote(MethodEntry n, int count) {
         if (this.new_mth != null) {
             return false;
         }
@@ -87,7 +91,7 @@ public class MethodMatchEntry {
         }
         Integer v = this.votes.get(n);
         if (v != null) {
-            int vote = v + 1;
+            int vote = v + count;
             this.votes.put(n, vote);
             if (vote > this.highest) {
                 if (n == this.highest_type) {
@@ -101,9 +105,9 @@ public class MethodMatchEntry {
                 this.second = vote;
             }
         } else {
-            this.votes.put(n, 1);
+            this.votes.put(n, count);
             if (this.highest == 0) {
-                this.highest = 1;
+                this.highest = count;
                 this.highest_type = n;
             }
         }

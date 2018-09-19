@@ -70,6 +70,10 @@ public class FieldMatchEntry {
     }
 
     public boolean vote(FieldEntry n) {
+        return vote(n, MatchEntry.NORMAL_VOTE);
+    }
+    
+    public boolean vote(FieldEntry n, int count) {
         if (this.new_field != null) {
             return false;
         }
@@ -84,7 +88,7 @@ public class FieldMatchEntry {
         }
         Integer v = this.votes.get(n);
         if (v != null) {
-            int vote = v + 1;
+            int vote = v + count;
             this.votes.put(n, vote);
             if (vote > this.highest) {
                 if (n == this.highest_type) {
@@ -98,9 +102,9 @@ public class FieldMatchEntry {
                 this.second = vote;
             }
         } else {
-            this.votes.put(n, 1);
+            this.votes.put(n, count);
             if (this.highest == 0) {
-                this.highest = 1;
+                this.highest = count;
                 this.highest_type = n;
             }
         }

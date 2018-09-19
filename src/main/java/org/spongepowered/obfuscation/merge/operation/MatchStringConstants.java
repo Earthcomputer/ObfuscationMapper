@@ -54,6 +54,7 @@ import org.spongepowered.despector.ast.type.MethodEntry;
 import org.spongepowered.despector.ast.type.TypeEntry;
 import org.spongepowered.obfuscation.merge.MergeEngine;
 import org.spongepowered.obfuscation.merge.MergeOperation;
+import org.spongepowered.obfuscation.merge.data.MatchEntry;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -104,7 +105,10 @@ public class MatchStringConstants implements MergeOperation {
                 if (new_complexity < old_complexity * 0.1 || old_complexity < new_complexity * 0.1) {
                     continue;
                 }
-                set.vote(old, n);
+                if (old_complexity < 10) {
+                    continue;
+                }
+                set.vote(old, n, MatchEntry.BIG_VOTE);
             }
         }
     }

@@ -46,6 +46,7 @@ import org.spongepowered.despector.util.TypeHelper;
 import org.spongepowered.obfuscation.data.MappingsSet;
 import org.spongepowered.obfuscation.merge.MergeEngine;
 import org.spongepowered.obfuscation.merge.MergeOperation;
+import org.spongepowered.obfuscation.merge.data.MatchEntry;
 import org.spongepowered.obfuscation.merge.data.MethodMatchEntry;
 
 import java.util.HashMap;
@@ -151,7 +152,7 @@ public class CustomMethodMergers implements MergeOperation {
                 String key = ((StringConstant) invoke.getParameters()[0]).getConstant();
                 FieldEntry old = old_sounds.get(key);
                 if (old != null) {
-                    set.vote(old, fld);
+                    set.vote(old, fld, MatchEntry.BIG_VOTE);
                 }
             }
         }
@@ -223,7 +224,7 @@ public class CustomMethodMergers implements MergeOperation {
                 key = ((StringConstant) invoke.getParameters()[0]).getConstant();
                 FieldEntry old = old_fields.get(key);
                 if (old != null) {
-                    set.vote(old, fld);
+                    set.vote(old, fld, MatchEntry.BIG_VOTE);
                     MergeUtil.merge(set, old_vals.get(key), assign.getValue());
                 }
             }
@@ -243,7 +244,7 @@ public class CustomMethodMergers implements MergeOperation {
         for (Map.Entry<String, TypeEntry> e : new_types.entrySet()) {
             TypeEntry old = old_types.get(e.getKey());
             if (old != null) {
-                set.vote(old, e.getValue());
+                set.vote(old, e.getValue(), MatchEntry.BIG_VOTE);
             }
         }
     }
@@ -342,7 +343,7 @@ public class CustomMethodMergers implements MergeOperation {
         for (Map.Entry<String, TypeEntry> e : new_types.entrySet()) {
             TypeEntry old = old_types.get(e.getKey());
             if (old != null) {
-                set.vote(old, e.getValue());
+                set.vote(old, e.getValue(), MatchEntry.BIG_VOTE);
             }
         }
     }
@@ -423,7 +424,7 @@ public class CustomMethodMergers implements MergeOperation {
         for (Map.Entry<String, TypeEntry> e : new_types.entrySet()) {
             TypeEntry old = old_types.get(e.getKey());
             if (old != null) {
-                set.vote(old, e.getValue());
+                set.vote(old, e.getValue(), MatchEntry.BIG_VOTE);
             }
         }
     }

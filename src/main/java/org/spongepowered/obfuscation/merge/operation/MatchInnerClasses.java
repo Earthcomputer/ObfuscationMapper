@@ -129,12 +129,12 @@ public class MatchInnerClasses implements MergeOperation {
         }
 
         if (old_anon.size() == 1 && new_anon.size() == 1) {
-            set.vote(old_anon.get(0), new_anon.get(0));
+            set.vote(old_anon.get(0), new_anon.get(0), MatchEntry.BIG_VOTE);
         } else {
         }
 
         if (old_named.size() == 1 && new_named.size() == 1) {
-            set.vote(old_named.get(0), new_named.get(0));
+            set.vote(old_named.get(0), new_named.get(0), MatchEntry.BIG_VOTE);
         } else {
             for (TypeEntry type : old_named) {
                 if (set.isTypeMatched(type)) {
@@ -157,6 +157,7 @@ public class MatchInnerClasses implements MergeOperation {
                         }
                         if (m > matches) {
                             possible = pos;
+                            matches = m;
                         } else if (m == matches) {
                             possible = null;
                         }

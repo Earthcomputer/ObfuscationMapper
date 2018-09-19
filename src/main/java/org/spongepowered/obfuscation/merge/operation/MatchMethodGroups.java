@@ -65,7 +65,7 @@ public class MatchMethodGroups implements MergeOperation {
                 }
                 MethodEntry n = new_group.getOverride(type_match.getNewType());
                 if (n != null) {
-                    set.vote(old, n);
+                    set.vote(old, n); // TODO: what should the size of this vote be?
                 }
             }
         }

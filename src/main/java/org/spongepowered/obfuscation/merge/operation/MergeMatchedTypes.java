@@ -86,7 +86,7 @@ public class MergeMatchedTypes implements MergeOperation {
                 TypeEntry old_super = set.getOldSourceSet().get(((ClassEntry) old).getSuperclassName());
                 TypeEntry new_super = set.getNewSourceSet().get(((ClassEntry) new_).getSuperclassName());
                 if (old_super != null && new_super != null) {
-                    set.vote(old_super, new_super);
+                    set.vote(old_super, new_super, MatchEntry.BIG_VOTE);
                 }
             }
 
@@ -131,7 +131,7 @@ public class MergeMatchedTypes implements MergeOperation {
                         }
                     }
                     if (inter_match != null) {
-                        set.vote(old_inter, inter_match);
+                        set.vote(old_inter, inter_match, MatchEntry.BIG_VOTE);
                     }
                 }
             }

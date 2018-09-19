@@ -161,11 +161,15 @@ public class MergeEngine {
     }
 
     public boolean vote(TypeEntry old, TypeEntry n) {
+        return vote(old, n, MatchEntry.NORMAL_VOTE);
+    }
+    
+    public boolean vote(TypeEntry old, TypeEntry n, int count) {
         MatchEntry m = getPendingMatch(old);
         if (this.matches_inverse.containsKey(n)) {
             return m.getNewType() == n;
         }
-        return m.vote(n);
+        return m.vote(n, count);
     }
 
     public boolean isTypeMatched(TypeEntry n) {
@@ -232,11 +236,15 @@ public class MergeEngine {
     }
 
     public boolean vote(MethodEntry old, MethodEntry n) {
+        return vote(old, n, MatchEntry.NORMAL_VOTE);
+    }
+    
+    public boolean vote(MethodEntry old, MethodEntry n, int count) {
         MethodMatchEntry m = getPendingMethodMatch(old);
         if (this.method_matches_inverse.containsKey(n)) {
             return m.getNewMethod() == n;
         }
-        return m.vote(n);
+        return m.vote(n, count);
     }
 
     public boolean isMethodMatched(MethodEntry n) {
@@ -285,11 +293,15 @@ public class MergeEngine {
     }
 
     public boolean vote(FieldEntry old, FieldEntry n) {
+        return vote(old, n, MatchEntry.NORMAL_VOTE);
+    }
+    
+    public boolean vote(FieldEntry old, FieldEntry n, int count) {
         FieldMatchEntry m = getPendingFieldMatch(old);
         if (this.field_matches_inverse.containsKey(n)) {
             return m.getNewField() == n;
         }
-        return m.vote(n);
+        return m.vote(n, count);
     }
 
     public boolean isFieldMatched(FieldEntry n) {

@@ -223,7 +223,7 @@ public class MatchReferences implements MergeOperation {
                 TypeEntry oanon = this.old_anons.get(fld);
                 TypeEntry nanon = this.new_anons.get(n);
                 if (oanon != null && nanon != null) {
-                    set.vote(oanon, nanon);
+                    set.vote(oanon, nanon, MatchEntry.HINT_VOTE);
                 }
 
                 matchDiscreteByType(set, this.old_method_invokes.get(fld), this.new_method_invokes.get(n));
@@ -238,7 +238,7 @@ public class MatchReferences implements MergeOperation {
                 TypeEntry oanon = this.old_anons.get(fld);
                 TypeEntry nanon = this.new_anons.get(n);
                 if (oanon != null && nanon != null) {
-                    set.vote(oanon, nanon);
+                    set.vote(oanon, nanon, MatchEntry.HINT_VOTE);
                 }
 
                 matchDiscreteByType(set, this.old_method_invokes.get(fld), this.new_method_invokes.get(n));
@@ -261,7 +261,7 @@ public class MatchReferences implements MergeOperation {
         if (new_by_type.size() == 1 && old_by_type.size() == 1) {
             TypeEntry old_type = old_by_type.keySet().iterator().next();
             TypeEntry new_type = new_by_type.keySet().iterator().next();
-            set.vote(old_type, new_type);
+            set.vote(old_type, new_type, MatchEntry.HINT_VOTE);
         }
 
         for (TypeEntry old_type : old_by_type.keySet()) {
