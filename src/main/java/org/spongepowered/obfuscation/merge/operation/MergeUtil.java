@@ -87,6 +87,7 @@ import org.spongepowered.despector.ast.type.MethodEntry;
 import org.spongepowered.despector.ast.type.TypeEntry;
 import org.spongepowered.despector.util.TypeHelper;
 import org.spongepowered.obfuscation.merge.MergeEngine;
+import org.spongepowered.obfuscation.merge.data.MatchEntry;
 
 import java.util.HashMap;
 import java.util.List;
@@ -143,7 +144,7 @@ public class MergeUtil {
             if (old_type == null || new_type == null) {
                 return c.getDescriptor().equals(cn.getDescriptor());
             }
-            return set.vote(old_type, new_type);
+            return set.vote(old_type, new_type, MatchEntry.HINT_VOTE);
         } else if (o instanceof GenericClassTypeSignature && n instanceof GenericClassTypeSignature) {
             GenericClassTypeSignature c = (GenericClassTypeSignature) o;
             GenericClassTypeSignature cn = (GenericClassTypeSignature) n;
@@ -164,7 +165,7 @@ public class MergeUtil {
                 if (!c.getDescriptor().equals(cn.getDescriptor())) {
                     return false;
                 }
-            } else if (!set.vote(old_type, new_type)) {
+            } else if (!set.vote(old_type, new_type, MatchEntry.HINT_VOTE)) {
                 return false;
             }
             for (int i = 0; i < c.getArguments().size(); i++) {
@@ -378,13 +379,13 @@ public class MergeUtil {
                     return false;
                 }
             } else {
-                if (!set.vote(old_owner, new_owner)) {
+                if (!set.vote(old_owner, new_owner, MatchEntry.HINT_VOTE)) {
                     return false;
                 }
                 FieldEntry old_field = findField(old_owner, a.getFieldName());
                 FieldEntry new_field = findField(new_owner, b.getFieldName());
                 if (old_field != null && new_field != null) {
-                    if (!set.vote(old_field, new_field)) {
+                    if (!set.vote(old_field, new_field, MatchEntry.HINT_VOTE)) {
                         return false;
                     }
                 } else if (!a.getFieldName().equals(b.getFieldName())) {
@@ -419,13 +420,13 @@ public class MergeUtil {
                     return false;
                 }
             } else {
-                if (!set.vote(old_owner, new_owner)) {
+                if (!set.vote(old_owner, new_owner, MatchEntry.HINT_VOTE)) {
                     return false;
                 }
                 FieldEntry old_field = findStaticField(old_owner, a.getFieldName());
                 FieldEntry new_field = findStaticField(new_owner, b.getFieldName());
                 if (old_field != null && new_field != null) {
-                    if (!set.vote(old_field, new_field)) {
+                    if (!set.vote(old_field, new_field, MatchEntry.HINT_VOTE)) {
                         return false;
                     }
                 } else if (!a.getFieldName().equals(b.getFieldName())) {
@@ -626,7 +627,7 @@ public class MergeUtil {
                             return false;
                         }
                     } else {
-                        if (!set.vote(ace, bce)) {
+                        if (!set.vote(ace, bce, MatchEntry.HINT_VOTE)) {
                             return false;
                         }
                     }
@@ -680,7 +681,7 @@ public class MergeUtil {
                 if (!a.getLambdaOwner().equals(b.getLambdaOwner())) {
                     return false;
                 }
-            } else if (!set.vote(ao, bo)) {
+            } else if (!set.vote(ao, bo, MatchEntry.HINT_VOTE)) {
                 return false;
             }
             return true;
@@ -700,7 +701,7 @@ public class MergeUtil {
                     return false;
                 }
             } else {
-                if (!set.vote(ao, bo)) {
+                if (!set.vote(ao, bo, MatchEntry.HINT_VOTE)) {
                     return false;
                 }
                 MethodEntry old_method = findMethod(ao, a.getMethodName(), a.getMethodDescription());
@@ -709,7 +710,7 @@ public class MergeUtil {
                     if (a.getMethodName() != b.getMethodName()) {
                         return false;
                     }
-                } else if (!set.vote(old_method, new_method)) {
+                } else if (!set.vote(old_method, new_method, MatchEntry.HINT_VOTE)) {
                     return false;
                 }
             }
@@ -725,7 +726,7 @@ public class MergeUtil {
                     if (!ap.get(i).equals(bp.get(i))) {
                         return false;
                     }
-                } else if (!set.vote(apo, bpo)) {
+                } else if (!set.vote(apo, bpo, MatchEntry.HINT_VOTE)) {
                     return false;
                 }
             }
@@ -738,7 +739,7 @@ public class MergeUtil {
                     if (!ar.equals(br)) {
                         return false;
                     }
-                } else if (!set.vote(apo, bpo)) {
+                } else if (!set.vote(apo, bpo, MatchEntry.HINT_VOTE)) {
                     return false;
                 }
             }
@@ -768,7 +769,7 @@ public class MergeUtil {
                     if (!ap.get(i).equals(bp.get(i))) {
                         return false;
                     }
-                } else if (!set.vote(apo, bpo)) {
+                } else if (!set.vote(apo, bpo, MatchEntry.HINT_VOTE)) {
                     return false;
                 }
             }
@@ -787,7 +788,7 @@ public class MergeUtil {
                     return false;
                 }
             } else {
-                if (!set.vote(ao, bo)) {
+                if (!set.vote(ao, bo, MatchEntry.HINT_VOTE)) {
                     return false;
                 }
                 MethodEntry old_method = findStaticMethod(ao, a.getMethodName(), a.getMethodDescription());
@@ -796,7 +797,7 @@ public class MergeUtil {
                     if (a.getMethodName() != b.getMethodName()) {
                         return false;
                     }
-                } else if (!set.vote(old_method, new_method)) {
+                } else if (!set.vote(old_method, new_method, MatchEntry.HINT_VOTE)) {
                     return false;
                 }
             }
@@ -812,7 +813,7 @@ public class MergeUtil {
                     if (!ap.get(i).equals(bp.get(i))) {
                         return false;
                     }
-                } else if (!set.vote(apo, bpo)) {
+                } else if (!set.vote(apo, bpo, MatchEntry.HINT_VOTE)) {
                     return false;
                 }
             }
@@ -825,7 +826,7 @@ public class MergeUtil {
                     if (!ar.equals(br)) {
                         return false;
                     }
-                } else if (!set.vote(apo, bpo)) {
+                } else if (!set.vote(apo, bpo, MatchEntry.HINT_VOTE)) {
                     return false;
                 }
             }
@@ -1001,13 +1002,13 @@ public class MergeUtil {
                 }
                 return a.getFieldName() == b.getFieldName();
             }
-            if (!set.vote(old_owner, new_owner)) {
+            if (!set.vote(old_owner, new_owner, MatchEntry.HINT_VOTE)) {
                 return false;
             }
             FieldEntry old_field = findField(old_owner, a.getFieldName());
             FieldEntry new_field = findField(new_owner, b.getFieldName());
             if (old_field != null && new_field != null) {
-                if (!set.vote(old_field, new_field)) {
+                if (!set.vote(old_field, new_field, MatchEntry.HINT_VOTE)) {
                     return false;
                 }
             } else if (!a.getFieldName().equals(b.getFieldName())) {
@@ -1033,13 +1034,13 @@ public class MergeUtil {
                 }
                 return a.getFieldName() == b.getFieldName();
             }
-            if (!set.vote(old_owner, new_owner)) {
+            if (!set.vote(old_owner, new_owner, MatchEntry.HINT_VOTE)) {
                 return false;
             }
             FieldEntry old_field = findStaticField(old_owner, a.getFieldName());
             FieldEntry new_field = findStaticField(new_owner, b.getFieldName());
             if (old_field != null && new_field != null) {
-                if (!set.vote(old_field, new_field)) {
+                if (!set.vote(old_field, new_field, MatchEntry.HINT_VOTE)) {
                     return false;
                 }
             } else if (!a.getFieldName().equals(b.getFieldName())) {
